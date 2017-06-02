@@ -1,0 +1,293 @@
+body
+{
+  
+ 
+left:0;
+    position: absolute;
+   
+}
+
+
+#blackbox
+{
+    background-color: #111;
+    width: 32%;
+    height: 270px;
+    margin: 45px auto auto auto;
+    color: #eee;
+    position:relative;
+    
+}
+
+
+#locText
+{
+   
+    text-align: center;
+   align-content: center;
+  
+    font-size: 14px;
+    font-family:  arial, sans-serif;
+   
+    color: #eee;
+    padding-top: 70px;
+    padding-bottom: 20 px;
+    
+    
+
+    letter-spacing: 5px;
+}
+
+
+#border
+{
+     text-align: center;
+    
+    padding-top: 20px;
+     border-bottom: solid 1px #000000;
+   
+      border-bottom-color: #eee;
+    width:80%;
+    margin-left: 45px;
+ 
+}
+
+hr
+{
+    margin-top: 20px;
+    width:80%;
+   
+    
+}
+
+#no
+{
+  vertical-align:top;font-size:60px;
+    font-family: sans-serif;
+    vertical-align: super;
+    border-bottom: solid 5px #000000;
+      border-bottom-color: #eee;
+      padding-bottom: 2px;
+   
+}
+#a13
+{
+    vertical-align:bottom;
+    font-size:120px; 
+    font-family: sans-serif;
+  
+}
+a#No13Link
+{
+    text-decoration: none;
+    color: #eee;
+}
+
+#image
+{
+   padding-left :10px;
+    margin-left :10px;
+    padding-top:200px;
+    margin-top:50px;
+ position: relative;
+    background: url(http://cs-server.usc.edu:45678/hw/hw3/images/sayhello.png), no-repeat;
+   background-position:center 0px;
+   
+  
+}
+
+#textOnImage
+{
+    font-family: sans-serif;
+    font-size: 15px;
+    color: #c59c07;
+    float:top;
+    position:absolute;
+    bottom: 89px;
+    left:67px;
+    letter-spacing: 4px;
+  font-weight: 590;
+  margin-left: 400px;
+   
+   
+    
+}
+#git_link
+{
+   
+    
+    
+}
+a#git_link:link
+{
+     text-decoration:none; color:black;
+}
+a#git_link:visited
+{
+    color:black;
+    background: black;
+}
+
+div.button
+{
+    width:20%;
+    margin:10px auto 80px auto;
+   text-align: center;
+    font-weight: 500;
+    vertical-align: middle;
+    font-family: sans-serif;
+    font-size:14px;
+    
+    border-top: 3px solid #000000;
+    border-right: 3px solid #000000;
+    border-bottom: 3px solid #000;
+    border-left: 3px solid #000;
+    padding-top: 20px;
+    padding-left:20px;
+    padding-right:20px;
+    padding-bottom: 20px;
+    text-decoration: none;
+    letter-spacing: 4px;
+    
+   
+}
+div.button:hover
+{
+    
+    color:white;
+    background: black;
+}
+
+.footer
+{
+    background: #202020;
+   
+    border-collapse: collapse;
+    
+    color:white;
+    width:100%;
+    height: 100%;
+   
+    
+    
+    
+    
+}
+.footer2
+{
+    background: #202020;
+   
+    border-collapse: collapse;
+     
+    color:white;
+   width: 100%;
+    
+    
+    
+    
+}
+.form1
+{
+    font-family: sans-serif;
+    color: #202020;
+    padding-left:70px;
+    padding-bottom:20px;
+    letter-spacing: 5px;
+    font-size: 13px;
+    
+}
+input[type=text] {
+    width: 53%;
+    height: 90%;
+   margin-top: 30px;
+   
+   
+    padding: 18px 12px;
+   top: 30px;
+    box-sizing: content-box;
+    font-size:20px;
+    
+
+}
+.articleLink
+{
+    text-decoration:none;
+  
+     
+   color:white;
+   
+}
+a.articleLink:hover
+{
+    text-decoration: underline;
+    color:white;
+}
+
+.button2
+{
+   
+    margin:251px 40px 10px 5px;
+    
+   
+   
+    color:white;
+   
+    font-weight: 500;
+  
+    font-family: sans-serif;
+    
+    font-size:14px;
+    background: #202020;
+    border-top: 3px solid #fff;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    border-left: 3px solid #fff;
+    padding-top: 20px;
+    padding-left:60px;
+    padding-right:60px;
+    padding-bottom: 19px;
+    text-decoration: none;
+    letter-spacing: 4px;
+    position: absolute;
+    bottom: 28px;
+   
+}
+a.button2:hover
+{
+    color:black;
+    background:white;
+}
+
+
+.button3
+{
+   
+    margin:0px 30px 35px 0px;
+    
+    width: 200px;
+    float:left;
+    color:white;
+    text-align: center;
+    font-weight: 500;
+    vertical-align: middle;
+    font-family: sans-serif;
+    font-size:13px;
+    background: #202020;
+    border-top: 3px solid #fff;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    border-left: 3px solid #fff;
+    padding-top: 12px;
+    padding-left:5px;
+    padding-right:0px;
+    padding-bottom: 13px;
+    text-decoration: none;
+    letter-spacing: 4px;
+    vertical-align: middle;
+}
+a.button3:hover
+{
+    color:black;
+    background:white;
+}
+

@@ -1,0 +1,74 @@
+.navbar-default .navbar-nav>.active>a,
+        .navbar-default .navbar-nav>.active>a:focus,
+        .navbar-default .navbar-nav>.active>a:hover {
+            color: white;
+            background-color: #3b5998;
+        }
+
+@media only screen and (min-width: 500px) 
+
+{
+    .albumbigscreen {
+       width:48%;
+        margin-left:1%;
+    }
+    .postbigscreen
+    {
+        width:48%;
+        margin-right:1%;
+    }
+    
+    .input
+    {
+        padding:0px;
+        max-width:50%;
+        margin-left:20%;
+        
+        
+    }
+    .bigsearch
+    {
+       width:20%;
+        margin-right:10%;
+    }
+    .largenav
+    {
+        
+        padding-left:0px;
+        padding-right:0px;
+    }
+    .hoverpointer
+    {
+        
+        cursor:pointer !important;
+    }
+    
+}
+
+
+
+@media only screen and (max-width: 400px) 
+{
+    .smallinput
+    {
+        padding:0;
+        margin-left:5%;
+    }
+    .fbsearch
+    {
+        margin-bottom:2%;
+        
+    }
+    .smallsearch
+    {
+        margin-right:5%;
+    }
+    
+    .smallnav
+    {
+        padding-top:0 !important;
+        padding-bottom:0 !important;
+        
+    }
+    
+}

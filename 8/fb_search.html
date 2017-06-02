@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> Gaurav Assignment 8 </title>
+    <meta charset="utf-8">
+    <!--  Using meta viewport tag to control Browsers Viewport control -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fb_search.css">
+    <script src='https://connect.facebook.net/en_US/all.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Angular JS Library-->
+    <!--Moment JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="fb_search.js"></script>
+    <!-- ANGULAR JS ANIMATE -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+    
+
+    
+</head>
+
+<body ng-app="resultApp" ng-controller="resultAppController" ng-init="searchType='users';searchKey=null;detailId='';detailName='';detailPic='';fromPage='';">
+  
+
+
+    <div class="container-fluid" style="padding-left:0px;;padding-right:0px;">
+
+        <!-- Page Header -->
+       <div class="well well-sm  " style=" border-radius: 1px;margin:0;">
+            <span class="col-lg-2 col-xs-12 fbsearch "style="color:#3b5998;float:left;margin-top:0.6%;">FB Search</span>
+
+            <div class="input-group col-lg-8 col-xs-12" style="border-radius: 20px; ">
+                <form class=""method="get"   style="">
+                    <div class="col-lg-10 input smallinput col-xs-6">
+                    <input id="fbinputText"class="form-control "ng-model="searchkey" ng-keyup="searchKey=searchkey" id="searchId " type="text" placeholder="type something..." style=" border-radius: 1px;" required="true"></div>
+                    <div class="  input-group-btn  ">
+                        
+                        
+                    <button  id="searchFB" class="btn btn-default bigsearch smallsearch" style="background: #3b5998; float:left; border-radius: 1px;"  ng-click="searchKey=searchkey;loadData(searchKey);">
+                                <i class="glyphicon glyphicon-search" style="color:white;" ></i>
+                        </button>
+                   <button type="button" class="btn btn-default" style="border-radius:1px;;border:solid 1px #3b5998;color:#3b59ff;" ng-model="clear" ng-click="clearResults()">Clear</button>
+                </div>
+                </form>
+            </div>
+
+
+        </div>
+
+        <!-- TABS Component -->
+
+        <nav class="navbar navbar-default" style="background:white; border-bottom:2px solid #3b59ff ">
+            <div class="container-fluid" style="font-size:2em; padding-left:0;padding-right:0;">
+                <ul class="nav navbar-nav col-lg-12" style="padding:0px;">
+                    <li id='user' class=" col-lg-2 active smallnav largenav" style="text-align:center" ng-click="searchType='users';switchTab();" onclick="makeActive(this);">
+                        <a href="#" style="font-size:0.5em;" class="smallnav">Users</a>
+                    </li>
+
+                    <li id='page' class="smallnav largenav col-lg-2 hoverpointer"style="text-align:center" ng-click="searchType='pages';switchTab();" onclick="makeActive(this);">
+                        <a  style="font-size:0.5em;" class="smallnav">Pages</a>
+                    </li>
+                    <li id='event' class="col-lg-2 largenav smallnav hoverpointer"style="text-align:center" ng-click="searchType='events';switchTab();" onclick="makeActive(this);">
+                        <a  style="font-size:0.5em;" class="smallnav">Events</a>
+                    </li>
+                    <li style="text-align:center" class="col-lg-2 largenav smallnav hoverpointer"id='place' ng-click="searchType='places';switchTab();" onclick="makeActive(this);">
+                        <a  style="font-size:0.5em;" class="smallnav">Places</a>
+                    </li>
+                    <li style="text-align:center" id='group' class="col-lg-2 largenav smallnav hoverpointer"ng-click="searchType='groups';switchTab();" onclick="makeActive(this);">
+                        <a  style="font-size:0.5em;" class="smallnav">Groups</a>
+                    </li>
+                    <li style="text-align:center" id='favorite' class="col-lg-2 largenav smallnav" ng-click="searchType='favorites';loadFavoritesTable();" onclick="makeActive(this);">
+                        <a href="#" style="font-size:0.5em;" class="smallnav">Favorites</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <!-- Progress Bar -->
+        <div id="pgbar1" class="progress" style="display:none; width:70%;margin:auto;margin-top:10%;">
+            <div class="progress-bar progress-bar-auto progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%; margin:auto;">
+
+            </div>
+        </div>
+
+        <div id="albumpgbar" class="progress" style="display:none; width:30%;margin-top:10%;float:left;margin-left:10%">
+            <div class="progress-bar progress-bar-auto progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%; margin:auto;">
+
+            </div>
+        </div>
+        <div id="postpgbar" class="progress" style="display:none; width:30%; margin-top:10%;float:right;margin-right:10%">
+            <div class="progress-bar progress-bar-auto progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%; margin:auto;">
+
+            </div>
+        </div>
+
+
+
+        <div id="resultTable" style="display:none" class="col-xs-12">
+            <table id="result" class="table table-hover">
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Profile photo</th>
+                        <th>Name</th>
+                        <th>Favorite</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="x in fbData">
+                        <td>{{$index+1}}</td>
+                        <td><img width="30" height="30" class="img img-circle" src="{{x['picture']['data']['url']}}"></td>
+                        <td>{{x['name']}} </td>
+                        <td ng-if="localStorage.getItem(x['id'])!=null"><button class="btn btn-default" style="background:white;" ng-click="removeFav(x['id']);" onclick( "$(\"this\ ").children(\"i\ ").removeClass(\"glyphicon-star\ ");$(\"this\ ").children(\"i\ ").addClass(\"glyphicon-star-empty\ ");$(\"this\ ").children(\"i\ ").css(\"color\ ",\"\ ")");>
+                             <i class="glyphicon glyphicon-star" style="color:yellow" ></i>
+                            </button></td>
+                        <td ng-if="localStorage.getItem(x['id'])==null"><button class="btn btn-default" style="background:white;" ng-click="makeFav(x['id'],x['name'],x['picture']['data']['url'],searchType);" onclick( "$(\"this\ ").children(\"i\ ").removeClass(\"glyphicon-star-empty\ ");$(\"this\ ").children(\"i\ ").addClass(\"glyphicon-star\ ");");>
+                             <i class="glyphicon glyphicon-star-empty" ></i>
+                            </button></td>
+                        <td><button class="btn btn-default" style="background:white;" ng-click="loadDetails(x['id'],x['name'],x['picture']['data']['url'],searchType,'result');">
+                             <i class="glyphicon glyphicon-chevron-right"  ></i>
+                            </button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button id="prev" class="btn btn-default" style="margin-left:40%;margin-bottom:2%;" ng-model="prev" ng-if="prev" ng-click="loadNew(prev)">Previous</button>
+
+            <button ng-model="next" ng-if="prev && next" ng-click="loadNew(next)" id="next" class="btn btn-default" style="margin-left:2%;padding-left:1.5%;padding-right:1.5%;margin-bottom:2%;">Next</button>
+            <button ng-model="next" ng-if="!prev && next" ng-click="loadNew(next)" id="next" class="btn btn-default" style="margin-left:45%;padding-left:1.5%;padding-right:1.5%;margin-bottom:2%;">Next</button></div>
+
+
+
+
+        <div id="favTable" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Profile photo</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Favorite</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="x in favData">
+                        <td>{{$index+1}}</td>
+                        <td><img width="30" height="30" class="img img-circle" src="{{x['pic']}}"></td>
+                        <td>{{x['name']}}</td>
+                        <td>{{x['type']}}</td>
+                        <td><button class="btn btn-default" style="background:white;" ng-click="removeFav(x['id']);loadFavoritesTable();">
+                             <i class="glyphicon glyphicon-trash"  ></i>
+                            </button></td>
+                        <td><button class="btn btn-default" style="background:white;" ng-click="loadDetails(x.id,x.name,x.pic,x.type,'favorite')">
+                             <i class="glyphicon glyphicon-chevron-right"  ></i>
+                            </button></td>
+
+
+
+
+
+                    </tr>
+
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+        <div id="detailPage" style="display:none;">
+            <div id="detailButtons">
+                <button type="button" class="btn btn-default" style="background:white;margin-left:0.5%;" ng-click="navigateTo();">
+            <i class="glyphicon glyphicon-chevron-left"  ></i>
+            Back</button>
+
+
+                <button type="button" class="btn btn-default" style="background:white;float:right;margin-right:0.5%" ng-click="postFB();">
+           <img src="http://cs-server.usc.edu:45678/hw/hw8/images/facebook.png" width="20px" height="20px;">
+            </button>
+                <button ng-if="localStorage.getItem(detailId)==null" type="button" class="btn btn-default" style="background:white;float:right; margin-right:2%" ng-click="makeFav(detailId,detailName,detailPic,searchType);fav=true;" onclick="checkOutFav(this);">
+            <i  class="glyphicon glyphicon-star-empty"  ></i></button>
+                <button ng-if="localStorage.getItem(detailId)" type="button" class="btn btn-default" style="background:white;float:right; margin-right:2%" ng-click="removeFav(detailId);fav=false;" onclick="checkOutFav(this);">
+             <i  class="glyphicon glyphicon-star" style="color:yellow;" ></i>
+            </button>
+            </div>
+
+            <!--ALBUMs EMPTY Window-->
+
+            <div id="noalbums" class="panel panel-default col-xs-12  col-lg-6 albumbigscreen" style="float:left;padding:0px;margin-top:2%">
+                <div class="panel-heading">Albums</div>
+                <div class="panel-body">
+                    <div class="well well-sm" ng-if="albums==null" style="background:#ffebcc;color:#995c00;margin-top:2%;margin-bottom:1%;">No data found.</div>
+
+                    <div class="panel panel-default " ng-repeat="x in albums" style="padding:0px;">
+                        <div class="panel-heading" ONCLICK=" disappearImage(this);"><a>{{x.name}}</a></div>
+                        <div ng-show="{{$index}}==0" id="{{$index}}Image" style="display:block;" >
+
+                            <div class="panel-body  " ng-repeat="pic in x.photos.data "><img class="img img-rounded  " style="width:100%;"src="{{pic.images[0].source}}"></div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                </div>
+
+            </div>
+
+            <!-- POSTs empty Window-->
+            <div id="noposts" class="panel panel-default col-xs-12 col-lg-6 postbigscreen" style="float:right;padding:0px;margin-top:2%">
+                <div class="panel-heading">Posts</div>
+                <div id="nopostPanel" class="panel-body" >
+                    <div ng-if="posts==null" class="well well-sm col-xs-12"  style="background:#ffebcc;color:#995c00;;">No data found.</div>
+
+                </div>
+
+                <div class="well" ng-repeat="post in posts" style=";background:white;margin:1%;">
+                    <img id="userpic" width="40" height="40" src="{{profpic}}" style="float:left;margin-right:0.5%"></img>
+                    <span style=""><b>{{profname}}</b></span><br/>
+                    <span style="color:#787878;margin-top:2%"> {{post.created_time}}</span><br/>
+                    <div style="margin-top:5%;">{{post.message}}</div>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+</body>
+
+</html>

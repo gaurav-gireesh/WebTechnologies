@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homework 4</title>
+    <script language="javascript" async>
+
+    //The following JS function reads the URL of the XML Input file
+   
+    
+    function extractXML (form) 
+    {
+       
+        var fileURL=form.URL.value.trim();
+       //alert("File url is:"+fileURL);
+        if(fileURL==null||fileURL==""){alert("Filename cannot be left Blank!");}
+       else{
+        var status=123;
+        
+        function loadXML(url) 
+        {
+                if (window.XMLHttpRequest)
+                {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp=new XMLHttpRequest(); 
+                }
+                else {
+                    // code for IE6, IE5
+                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); 
+                     }
+                        xmlhttp.open("GET",url,false);
+                       // xmlhttp.onloadend=function(){if(xmlhttp.status==404){alert("File Not Found!!!");status=404; }}
+                       
+                        xmlhttp.send(); //alert("Status after send is :"+xmlhttp.status);
+           {if(xmlhttp.status==404){alert("File Not Found!!!");status=404; }}
+                        xmlDoc=xmlhttp.responseXML;
+           // alert("xmlDoc is: url "+fileURL+"  and file is : "+xmlDoc);
+           // alert("After send: xmlDoc is"+xmlDoc);
+            
+            
+                        return xmlDoc; 
+            
+        }
+     
+        
+        xmlDoc = loadXML(fileURL.trim());if(status==404)return;  
+       
+       
+        if (window.ActiveXObject) //if IE, simply execute script (due to async prop).
+        {
+            if (xmlDoc.parseError.errorCode != 0) 
+            {
+                    var myErr = xmlDoc.parseError;
+                    generateError(xmlDoc);
+                //alert("Coming here ji!");
+                    hWin = window.open("", "Error", "height=300,width=340");
+                    hWin.document.write(html_text);
+                    }
+            else 
+            {// alert("Coming in else");
+                generateHTML(xmlDoc);
+               // hWin = window.open("", "Assignment4", "height=600,width=800");
+               // hWin.document.write(html_text); 
+            }
+        } 
+        else //else if FF, execute script once XML object has loaded
+        { 
+                
+            
+                xmlDoc.onload=generateHTML(xmlDoc);
+                 
+        }
+                //hWin.document.close();
+        
+    }}
+        
+        
+        function generateHTML(xmlDoc)
+        {
+           // alert(xmlDoc.URL);
+            ELEMENT_NODE = 1; // MS parser doesn't define Node.ELEMENT_NODE
+         
+            
+            
+            try{
+               // alert("XML DOc in try is "+xmlDoc);
+            root=xmlDoc.DOCUMENT_ELEMENT;
+            html_text="<html><head><title>Airlines</title></head><body>";
+            
+            
+            var headerArray=xmlDoc.getElementsByTagName("Header");//Getting the tag table here
+             //alert(headerArray.length);
+            
+            var header=headerArray.item(0);
+               // alert("Header item "+header.childNodes.length);
+              //  alert("item in header is "+header.childNodes.item(1).nodeValue);
+            //alert("header tag name is : "+header.nodeName);
+            var headers=header.children;
+           // alert("In header no of elements are: "+headers.length);
+          // alert("Headers "+headers);
+            var numRows=headers.length;
+           // html_text+="Length="+numRows;
+            
+            
+          
+            
+            
+            
+            var airlinesArray=xmlDoc.getElementsByTagName("Row");
+                // alert("airlines array length "+airlinesArray);
+            if(airlinesArray.length!=0){
+           // alert("No. of airline details are as follows:"+airlinesArray.length);
+                       
+            html_text+="<table style=\"border-style:'dotted'\" border='2'>";
+            html_text+="<tr>"
+            for(i=0;i<numRows;i++)
+            html_text+="<th>"+headers.item(i).firstChild.nodeValue.trim()+"</th>";
+            html_text+="</tr>"
+            //for each row parse
+            for(airline=0;airline<airlinesArray.length;airline++)
+                {
+           
+                    //alert("Coming in here!");
+                    html_text+="<tr>";
+                    
+                    var currentAirline=airlinesArray.item(airline);
+                    
+                    
+                    if(currentAirline.children.item(0).firstChild!=null)
+                        {
+                            var airlineName=currentAirline.children.item(0).firstChild.nodeValue.trim();
+                        }
+                    else
+                        var airlineName=null;
+                    if(airlineName=="" || airlineName==null)
+                    html_text+="<td></td>";
+                    else
+                         html_text+="<td>"+airlineName+"</td>";
+                    
+                    
+                     if(currentAirline.children.item(1).firstChild!=null)
+                    var iataValue=currentAirline.children.item(1).firstChild.nodeValue.trim();
+                    else
+                        var iataValue=null;
+                    
+                    if(iataValue==null)
+                        {
+                            html_text+="<td></td>";
+                        }
+                    else
+                            html_text+="<td>"+iataValue+"</td>"
+                            
+                            
+                    
+                    
+                    var hubsArray=currentAirline.children.item(2).children;
+                   // alert("Hubs array length is :"+hubsArray);
+                    if(hubsArray.length==0)
+                        html_text+="<td></td>"
+                    else{
+                        html_text+="<td><ul>";
+                    for(hub=0;hub<hubsArray.length;hub++)
+                        {
+                          
+                            // alert("Hub Name is: "+hubsArray.item(hub).firstChild.nodeValue);
+                            if(hubsArray.item(hub).firstChild!=null)
+                            var hubName=hubsArray.item(hub).firstChild.nodeValue.trim();
+                            else var hubName=null;
+                            if(hubName!=null){
+                            if(hub==0)
+                            html_text+="<li><strong>"+hubName+"</strong></li>";
+                            
+                           else
+                            html_text+="<li>"+hubName+"</li>";}else{html_text+="<li></li>"}
+                           
+                            
+                            
+                        }
+                        html_text+="</ul></td>"
+                    }
+                    
+                    if(currentAirline.children.item(3).firstChild!=null)
+                    var notes=currentAirline.children.item(3).firstChild.nodeValue.trim();
+                    else var notes=null;
+                    if(notes==null)
+                        html_text+="<td></td>"
+                    else
+                        html_text+="<td>"+notes+"</td>";
+                    
+                   // alert("airline Notes is :"+notes);
+                    
+                    
+                    if(currentAirline.children.item(4).firstChild!=null)
+                    var homepageurl=currentAirline.children.item(4).firstChild.nodeValue.trim();
+                    else  var homepageurl=null;
+                    if(homepageurl==null) html_text+="<td></td>";
+                    else                    html_text+="<td><a href=\""+homepageurl+"\">"+homepageurl+"</a></td>";
+                    
+                    
+                     //alert("airline url is :"+homepageurl);
+                    
+                    
+                    if(imageURL=currentAirline.children.item(5).firstChild!=null)
+                    var imageURL=currentAirline.children.item(5).firstChild.nodeValue.trim();
+                    else
+                        var imageURL=null;
+                    if(imageURL==null)
+                        html_text+="<td></td>";
+                    else
+                        {
+                            
+                            html_text+="<td>";
+                            html_text+="<img src=\""+imageURL+"\" width=\"260\" height=\"150\"/>";
+                            html_text+="</td>";
+                        }
+                }
+                   // alert("airline image url is  :"+imageURL);
+                    html_text+="</tr>";
+                    
+                    
+                    
+                    
+                       
+            html_text+="</table></body></html>";
+            hWin = window.open("", "Assignment4", "height=600,width=800");
+                hWin.document.write(html_text);
+                hWin.document.close();
+                    
+                }
+                
+                else{
+                    alert("No Airlines Listed!");
+                }
+            
+            
+            
+            
+            
+            
+         
+            }
+            catch(e)
+                {
+                    alert("Error in XML File");return;
+                }
+            
+            
+        }
+        
+       /* function validateEnter(e,f)
+        {
+            //alert(e.charCode);
+            if(e.charCode==13) extractXML(f);return;
+            
+        }*/
+    </script>
+</head>
+
+    
+    
+    <body>
+    <div style="margin:90px auto auto auto;text-align:center;">
+        <form name="xmlLocationForm" method="POST" onsubmit="return false;" ><strong>Enter URL for Airlines List XML File</strong><br><br>
+            <input type="text" name="URL" maxlength="255" size="25" value="" ><br/><br/>
+            <input type="submit" name="submit" Value="Submit Query" onClick="extractXML(this.form)"/>
+   
+        </form>
+    </div>
+</body>
+</html>
